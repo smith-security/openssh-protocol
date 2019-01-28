@@ -31,8 +31,8 @@ library
     src
 
   exposed-modules:
-    Crypto.OpenSSH.Protocol
-    Crypto.OpenSSH.Protocol.Primitive
+    Crypto.OpenSSH.Protocol.Encode
+    Crypto.OpenSSH.Protocol.Decode
 
 
 test-suite test
@@ -42,8 +42,10 @@ test-suite test
   hs-source-dirs: test
   build-depends:
       base >= 4.10 && < 5
+    , cereal
     , hedgehog == 0.6.*
     , openssh-protocol
+    , time
 
   other-modules:
     Test.Crypto.OpenSSH.Protocol

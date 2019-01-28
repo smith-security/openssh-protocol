@@ -1,13 +1,14 @@
 -- |
 -- OpenSSH protocol primitives as defined by <RFC4251 https://www.ietf.org/rfc/rfc4251.txt>.
 --
-module Crypto.OpenSSH.Protocol.Primitive (
+module Crypto.OpenSSH.Protocol.Encode (
     text
   , string
   , uint32
   , uint64
   , mpint
   , time
+  , utc
   ) where
 
 import           Data.Bits (Bits (..))
@@ -17,6 +18,7 @@ import qualified Data.Serialize as Serialize
 import           Data.Text (Text)
 import qualified Data.Text.Encoding as Text
 import           Data.Time (UTCTime)
+import           Data.Time.Clock.POSIX (POSIXTime)
 import qualified Data.Time.Clock.POSIX as Time
 import           Data.Word (Word8, Word32, Word64)
 import qualified Data.Vector.Primitive as Vector
@@ -25,7 +27,7 @@ import qualified Math.NumberTheory.Logarithms as Logarithms
 
 
 text :: Text -> Serialize.Put
-text = do
+text =
   string . Text.encodeUtf8
 
 string :: ByteString -> Serialize.Put
@@ -47,8 +49,12 @@ mpint n =
     Vector.forM_ (expand n) $
       Serialize.put
 
-time :: UTCTime -> Serialize.Put
+time :: POSIXTime -> Serialize.Put
 time =
+  uint64 . floor . toRational
+
+utc :: UTCTime -> Serialize.Put
+utc =
   uint64 . floor . toRational . Time.utcTimeToPOSIXSeconds
 
 expand :: Integer -> Vector.Vector Word8
