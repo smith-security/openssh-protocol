@@ -6,7 +6,7 @@ license:  BSD3
 license-file: LICENSE
 author: Mark Hibberd
 maintainer: mth@smith.st
-copyright: (c) 2018, HotelKilo
+copyright: (c) 2019, HotelKilo
 bug-reports: https://github.com/smith-security/openssh-protocol/issues
 category: Security
 build-type: Simple
@@ -15,6 +15,9 @@ cabal-version: >= 1.10
 description:
   This is a library collecting openssh protocol primitives
   using 'cereal'.
+source-repository head
+  type:     git
+  location: git@github.com:smith-security/openssh-protocol.git
 
 library
   default-language: Haskell2010
