@@ -27,3 +27,7 @@ most importantly:
  - Key pair encode/decode.
  - Ceritificate encode/decode + signing.
  - Agent message protocol.
+
+### Builds
+
+[![CircleCI](https://circleci.com/gh/smith-security/openssh-protocol.svg?style=svg)](https://circleci.com/gh/smith-security/openssh-protocol)
