@@ -1,0 +1,15 @@
+steps:
+  - label: openssh-protocol
+    plugins:
+      - docker-compose#v3.0.3:
+          run: haskell
+          config: '.buildkite/docker-compose.yml'
+    command:
+      - 'aws s3 cp s3://smith-artefacts/cache/openssh-protocol-cache.tar.gz openssh-protocol-cache.tar.gz || true'
+      - 'tar xfz openssh-protcol-cache.tar.gz -C /root || true'
+      - 'rm -f openssh-protcol-cache.tar.gz'
+      - 'mafia update'
+      - 'mafia build'
+      - 'tar cfz openssh-protocol-cache.tar.gz -C /root .mafia .cabal'
+      - 'aws s3 cp openssh-protocol-cache.tar.gz s3://smith-artefacts/cache/openssh-protocol-cache.tar.gz'
+      - 'mafia test'
